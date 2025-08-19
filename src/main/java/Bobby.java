@@ -116,60 +116,61 @@ public class Bobby {
 
         while (true) {
             input = scanner.nextLine();
+            String[] splits = input.split(" ", 2);
+            String keyword = splits[0].toLowerCase();
 
-            // Case 1: Exit Chatbot
-            if (input.equalsIgnoreCase("bye")) {
+            if (keyword.equals("bye") && splits.length == 1) {
                 printGoodbye();
                 break;
             }
 
-            // Case 2: Print List
-            if (input.equalsIgnoreCase("list")) {
-                printList(list, count);
-                continue;
+            switch (keyword) {
+                case "list":
+                    if (splits.length == 1) {
+                        printList(list, count);
+                        break;
+                    }
+
+                case "mark":
+                case "unmark":
+                    try {
+                        if (isMark(input, count)) {
+                            int num = Integer.parseInt(input.split(" ")[1]);
+                            list[num - 1].mark();
+                        }
+                        if (isUnmark(input, count)) {
+                            int num = Integer.parseInt(input.split(" ")[1]);
+                            list[num - 1].unmark();
+                        }
+                    } catch (NumberFormatException e) {
+                        ;
+                    } finally {
+                        break;
+                    }
+
+                case "todo":
+                    if (isToDo(input)) {
+                        addToDo(list, count, input);
+                        count++;
+                    }
+                    break;
+
+                case "deadline":
+                    if(isDeadline(input)) {
+                        addDeadline(list, count, input);
+                        count++;
+                    }
+                    break;
+
+                case "event":
+                    if (isEvent(input)) {
+                        addEvent(list, count, input);
+                        count++;
+                    }
+                    break;
+
+                default:
             }
-
-            // Case 3: Mark/Unmark Task
-            try {
-                // Case 3a: Mark Task
-                if (isMark(input, count)) {
-                    int num = Integer.parseInt(input.split(" ")[1]);
-                    list[num - 1].mark();
-                }
-
-                // Case 3b: Unmark Task
-                if (isUnmark(input, count)) {
-                    int num = Integer.parseInt(input.split(" ")[1]);
-                    list[num - 1].unmark();
-                }
-            } catch (NumberFormatException e) {
-                ;
-            }
-
-            // Case 4: Add ToDo
-            if (isToDo(input)) {
-                addToDo(list, count, input);
-                count++;
-                continue;
-            }
-
-            // Case 5: Add Deadline
-            if (isDeadline(input)) {
-                addDeadline(list, count, input);
-                count++;
-                continue;
-            }
-
-            // Case 6: Add Event
-            if (isEvent(input)) {
-                addEvent(list, count, input);
-                count++;
-                continue;
-            }
-
-//            // Case 7: Add Task
-//            addTask(list, count, input);
-//            count++;
         }
     }
 }
