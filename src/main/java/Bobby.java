@@ -8,6 +8,20 @@ public class Bobby {
         System.out.println("    ______________________________");
     }
 
+    public static boolean isMark(String input, int count) {
+        String[] splits = input.split(" ");
+        return (splits.length == 2
+                && splits[0].equalsIgnoreCase("mark")
+                && Integer.parseInt(splits[1]) <= count);
+    }
+
+    public static boolean isUnmark(String input, int count) {
+        String[] splits = input.split(" ");
+        return (splits.length == 2
+                && splits[0].equalsIgnoreCase("unmark")
+                && Integer.parseInt(splits[1]) <= count);
+    }
+
     public static void printGoodbye() {
         System.out.println("    ______________________________");
         System.out.println("    Bye. Hope to see you again soon!");
@@ -30,18 +44,66 @@ public class Bobby {
         System.out.println("    ______________________________");
     }
 
-    public static boolean isMark(String input, int count) {
-        String[] splits = input.split(" ");
-        return (splits.length == 2
-                && splits[0].equalsIgnoreCase("mark")
-                && Integer.parseInt(splits[1]) <= count);
+    public static boolean isToDo(String input) {
+        return input.split(" ")[0].equalsIgnoreCase("todo");
     }
 
-    public static boolean isUnmark(String input, int count) {
-        String[] splits = input.split(" ");
-        return (splits.length == 2
-                && splits[0].equalsIgnoreCase("unmark")
-                && Integer.parseInt(splits[1]) <= count);
+    public static boolean isDeadline(String input) {
+        String[] splits = input.split(" /");
+        if (splits.length == 2) {
+            if (splits[0].length() <= 8 || splits[1].length() <= 2) {
+                return false;
+            }
+            return (splits[0].substring(0, 8).equalsIgnoreCase("deadline")
+                    && splits[1].substring(0, 2).equalsIgnoreCase("by"));
+        }
+        return false;
+    }
+
+    public static boolean isEvent(String input) {
+        String[] splits = input.split(" /");
+        if (splits.length == 3) {
+            if (splits[0].length() <= 5 || splits[1].length() <= 4 || splits[2].length() <= 2) {
+                return false;
+            }
+            return (splits[0].substring(0, 5).equalsIgnoreCase("event")
+                    && splits[1].substring(0, 4).equalsIgnoreCase("from")
+                    && splits[2].substring(0, 2).equalsIgnoreCase("to"));
+        }
+        return false;
+    }
+
+    public static void addToDo(Task[] list, int count, String input) {
+        System.out.println("    ______________________________");
+        System.out.println("    Got it. I've added this task: ");
+        list[count] = new ToDo(input.split(" ", 2)[1]);
+        System.out.println("      " + list[count]);
+        System.out.println("    Now you have " + (count + 1) + " tasks in the list");
+        System.out.println("    ______________________________");
+    }
+
+    public static void addDeadline(Task[] list, int count, String input) {
+        System.out.println("    ______________________________");
+        System.out.println("    Got it. I've added this task: ");
+        String[] splits = input.split(" /");
+        list[count] = new Deadline(splits[0].substring(9), splits[1].substring(3));
+        System.out.println("      " + list[count]);
+        System.out.println("    Now you have " + (count + 1) + " tasks in the list");
+        System.out.println("    ______________________________");
+    }
+
+    public static void addEvent(Task[] list, int count, String input) {
+        System.out.println("    ______________________________");
+        System.out.println("    Got it. I've added this task: ");
+        String[] splits = input.split(" /");
+        list[count] = new Event(
+                splits[0].substring(6),
+                splits[1].substring(5),
+                splits[2].substring(3)
+        );
+        System.out.println("      " + list[count]);
+        System.out.println("    Now you have " + (count + 1) + " tasks in the list");
+        System.out.println("    ______________________________");
     }
 
     public static void main(String[] args) {
@@ -84,9 +146,30 @@ public class Bobby {
                 ;
             }
 
-            // Case 4: Add Task
-            addTask(list, count, input);
-            count++;
+            // Case 4: Add ToDo
+            if (isToDo(input)) {
+                addToDo(list, count, input);
+                count++;
+                continue;
+            }
+
+            // Case 5: Add Deadline
+            if (isDeadline(input)) {
+                addDeadline(list, count, input);
+                count++;
+                continue;
+            }
+
+            // Case 6: Add Event
+            if (isEvent(input)) {
+                addEvent(list, count, input);
+                count++;
+                continue;
+            }
+
+//            // Case 7: Add Task
+//            addTask(list, count, input);
+//            count++;
         }
     }
 }
