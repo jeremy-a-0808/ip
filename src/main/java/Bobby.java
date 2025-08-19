@@ -1,10 +1,26 @@
+import java.util.Scanner;
+
 public class Bobby {
     public static void main(String[] args) {
-        System.out.println("______________________________");
-        System.out.println("Hello! I'm Bobby");
-        System.out.println("What can I do for you?");
-        System.out.println("______________________________");
-        System.out.println("Hope to see you again soon!");
-        System.out.println("______________________________");
+        Scanner scanner = new Scanner(System.in);
+        String input;
+
+        System.out.println("        ______________________________");
+        System.out.println("        Hello! I'm Bobby");
+        System.out.println("        What can I do for you?");
+        System.out.println("        ______________________________");
+
+        while (true) {
+            input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("bye")) {
+                System.out.println("        Bye. Hope to see you again soon!");
+                System.out.println("        ______________________________");
+                break;
+            }
+
+            System.out.println("        " + input);
+            System.out.println("        ______________________________");
+        }
     }
 }
