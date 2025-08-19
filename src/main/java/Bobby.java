@@ -1,17 +1,17 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Bobby {
-    public static void printList(String[] list, int count) {
+    public static void printList(Task[] list, int count) {
         for (int i = 0; i < count; i++) {
-            System.out.println("    " + (i + 1) + ". " + list[i]);
+            System.out.println("    " + (i + 1) + "." + list[i]);
         }
+        System.out.println("    ______________________________");
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String input;
-        String[] list = new String[100];
+        Task[] list = new Task[100];
         int count = 0;
 
         System.out.println("    ______________________________");
@@ -31,13 +31,37 @@ public class Bobby {
 
             if (input.equalsIgnoreCase("list")) {
                 printList(list, count);
+                continue;
             }
 
-            else {
-                System.out.println("    added: " + input);
-                list[count] = input;
-                count++;
+            if (input.split(" ").length == 2){
+                String[] splits = input.split(" ");
+                if (splits[0].equalsIgnoreCase("mark")) {
+                    try {
+                        int num = Integer.parseInt(splits[1]);
+                        if (num <= count) {
+                            list[num - 1].mark();
+                        }
+                        continue;
+                    } catch (NumberFormatException e) {
+                        continue;
+                    }
+                } else if (splits[0].equalsIgnoreCase("unmark")) {
+                    try {
+                        int num = Integer.parseInt(splits[1]);
+                        if (num <= count) {
+                            list[num - 1].unmark();
+                        }
+                        continue;
+                    } catch (NumberFormatException e) {
+                        continue;
+                    }
+                }
             }
+
+            System.out.println("    added: " + input);
+            list[count] = new Task(input);
+            count++;
 
             System.out.println("    ______________________________");
         }
