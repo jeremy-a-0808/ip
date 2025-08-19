@@ -1,11 +1,47 @@
 import java.util.Scanner;
 
 public class Bobby {
+    public static void addTask(Task[] list, int count, String input) {
+        System.out.println("    ______________________________");
+        System.out.println("    added: " + input);
+        list[count] = new Task(input);
+        System.out.println("    ______________________________");
+    }
+
+    public static void printGoodbye() {
+        System.out.println("    ______________________________");
+        System.out.println("    Bye. Hope to see you again soon!");
+        System.out.println("    ______________________________");
+    }
+
     public static void printList(Task[] list, int count) {
+        System.out.println("    ______________________________");
+        System.out.println("    Here are the tasks in your list:");
         for (int i = 0; i < count; i++) {
             System.out.println("    " + (i + 1) + "." + list[i]);
         }
         System.out.println("    ______________________________");
+    }
+
+    public static void printWelcome() {
+        System.out.println("    ______________________________");
+        System.out.println("    Hello! I'm Bobby");
+        System.out.println("    What can I do for you?");
+        System.out.println("    ______________________________");
+    }
+
+    public static boolean isMark(String input, int count) {
+        String[] splits = input.split(" ");
+        return (splits.length == 2
+                && splits[0].equalsIgnoreCase("mark")
+                && Integer.parseInt(splits[1]) <= count);
+    }
+
+    public static boolean isUnmark(String input, int count) {
+        String[] splits = input.split(" ");
+        return (splits.length == 2
+                && splits[0].equalsIgnoreCase("unmark")
+                && Integer.parseInt(splits[1]) <= count);
     }
 
     public static void main(String[] args) {
@@ -14,56 +50,43 @@ public class Bobby {
         Task[] list = new Task[100];
         int count = 0;
 
-        System.out.println("    ______________________________");
-        System.out.println("    Hello! I'm Bobby");
-        System.out.println("    What can I do for you?");
-        System.out.println("    ______________________________");
+        printWelcome();
 
         while (true) {
             input = scanner.nextLine();
-            System.out.println("    ______________________________");
 
+            // Case 1: Exit Chatbot
             if (input.equalsIgnoreCase("bye")) {
-                System.out.println("    Bye. Hope to see you again soon!");
-                System.out.println("    ______________________________");
+                printGoodbye();
                 break;
             }
 
+            // Case 2: Print List
             if (input.equalsIgnoreCase("list")) {
                 printList(list, count);
                 continue;
             }
 
-            if (input.split(" ").length == 2){
-                String[] splits = input.split(" ");
-                if (splits[0].equalsIgnoreCase("mark")) {
-                    try {
-                        int num = Integer.parseInt(splits[1]);
-                        if (num <= count) {
-                            list[num - 1].mark();
-                        }
-                        continue;
-                    } catch (NumberFormatException e) {
-                        continue;
-                    }
-                } else if (splits[0].equalsIgnoreCase("unmark")) {
-                    try {
-                        int num = Integer.parseInt(splits[1]);
-                        if (num <= count) {
-                            list[num - 1].unmark();
-                        }
-                        continue;
-                    } catch (NumberFormatException e) {
-                        continue;
-                    }
+            // Case 3: Mark/Unmark Task
+            try {
+                // Case 3a: Mark Task
+                if (isMark(input, count)) {
+                    int num = Integer.parseInt(input.split(" ")[1]);
+                    list[num - 1].mark();
                 }
+
+                // Case 3b: Unmark Task
+                if (isUnmark(input, count)) {
+                    int num = Integer.parseInt(input.split(" ")[1]);
+                    list[num - 1].unmark();
+                }
+            } catch (NumberFormatException e) {
+                ;
             }
 
-            System.out.println("    added: " + input);
-            list[count] = new Task(input);
+            // Case 4: Add Task
+            addTask(list, count, input);
             count++;
-
-            System.out.println("    ______________________________");
         }
     }
 }
