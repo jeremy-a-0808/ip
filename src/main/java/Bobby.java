@@ -1,9 +1,18 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Bobby {
+    public static void printList(String[] list, int count) {
+        for (int i = 0; i < count; i++) {
+            System.out.println("    " + (i + 1) + ". " + list[i]);
+        }
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String input;
+        String[] list = new String[100];
+        int count = 0;
 
         System.out.println("    ______________________________");
         System.out.println("    Hello! I'm Bobby");
@@ -20,7 +29,16 @@ public class Bobby {
                 break;
             }
 
-            System.out.println("    " + input);
+            if (input.equalsIgnoreCase("list")) {
+                printList(list, count);
+            }
+
+            else {
+                System.out.println("    added: " + input);
+                list[count] = input;
+                count++;
+            }
+
             System.out.println("    ______________________________");
         }
     }
