@@ -1,7 +1,46 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+    ______________________________
+    Hello! I'm Bobby
+    What can I do for you?
+    ______________________________
+    ______________________________
+    Got it. I've added this task:
+      [T][ ] task1
+    Now you have 1 tasks in the list
+    ______________________________
+    ______________________________
+    Got it. I've added this task:
+      [D][ ] task2 (by: sunday)
+    Now you have 2 tasks in the list
+    ______________________________
+    ______________________________
+    Got it. I've added this task:
+      [E][ ] task3 (from: monday to: sunday)
+    Now you have 3 tasks in the list
+    ______________________________
+    ______________________________
+    Here are the tasks in your list:
+    1.[T][ ] task1
+    2.[D][ ] task2 (by: sunday)
+    3.[E][ ] task3 (from: monday to: sunday)
+    ______________________________
+    Nice! I've marked this task as done:
+      [T][X] task1
+    ______________________________
+    ______________________________
+    Here are the tasks in your list:
+    1.[T][X] task1
+    2.[D][ ] task2 (by: sunday)
+    3.[E][ ] task3 (from: monday to: sunday)
+    ______________________________
+    OK, I've marked this task as not done yet:
+      [T][ ] task1
+    ______________________________
+    ______________________________
+    Here are the tasks in your list:
+    1.[T][ ] task1
+    2.[D][ ] task2 (by: sunday)
+    3.[E][ ] task3 (from: monday to: sunday)
+    ______________________________
+    ______________________________
+    Bye. Hope to see you again soon!
+    ______________________________

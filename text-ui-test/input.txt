@@ -1,0 +1,13 @@
+todo task1
+deadline task2 /by sunday
+deadline noslashandby shouldfail
+event task3 /from monday /to sunday
+event noslashandfrom fails
+list
+mark 1
+list
+mark 4
+mark nonnumericalshouldfail
+unmark 1
+list
+bye

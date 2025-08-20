@@ -75,7 +75,7 @@ public class Bobby {
 
     public static void addToDo(Task[] list, int count, String input) {
         System.out.println("    ______________________________");
-        System.out.println("    Got it. I've added this task: ");
+        System.out.println("    Got it. I've added this task:");
         list[count] = new ToDo(input.split(" ", 2)[1]);
         System.out.println("      " + list[count]);
         System.out.println("    Now you have " + (count + 1) + " tasks in the list");
@@ -84,7 +84,7 @@ public class Bobby {
 
     public static void addDeadline(Task[] list, int count, String input) {
         System.out.println("    ______________________________");
-        System.out.println("    Got it. I've added this task: ");
+        System.out.println("    Got it. I've added this task:");
         String[] splits = input.split(" /");
         list[count] = new Deadline(splits[0].substring(9), splits[1].substring(3));
         System.out.println("      " + list[count]);
@@ -94,7 +94,7 @@ public class Bobby {
 
     public static void addEvent(Task[] list, int count, String input) {
         System.out.println("    ______________________________");
-        System.out.println("    Got it. I've added this task: ");
+        System.out.println("    Got it. I've added this task:");
         String[] splits = input.split(" /");
         list[count] = new Event(
                 splits[0].substring(6),
