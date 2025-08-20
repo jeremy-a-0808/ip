@@ -1,4 +1,6 @@
+randomtextfails
 todo task1
+todo
 deadline task2 /by sunday
 deadline noslashandby shouldfail
 event task3 /from monday /to sunday
@@ -10,4 +12,5 @@ mark 4
 mark nonnumericalshouldfail
 unmark 1
 list
+list failsbecausemorethan1word
 bye

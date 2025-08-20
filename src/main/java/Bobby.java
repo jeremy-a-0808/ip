@@ -45,7 +45,8 @@ public class Bobby {
     }
 
     public static boolean isToDo(String input) {
-        return input.split(" ")[0].equalsIgnoreCase("todo");
+        String[] splits = input.split(" ", 2);
+        return (splits.length == 2 && splits[0].equalsIgnoreCase("todo"));
     }
 
     public static boolean isDeadline(String input) {
@@ -106,7 +107,7 @@ public class Bobby {
         System.out.println("    ______________________________");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BobbyException {
         Scanner scanner = new Scanner(System.in);
         String input;
         Task[] list = new Task[100];
@@ -115,61 +116,84 @@ public class Bobby {
         printWelcome();
 
         while (true) {
-            input = scanner.nextLine();
-            String[] splits = input.split(" ", 2);
-            String keyword = splits[0].toLowerCase();
+            try {
+                input = scanner.nextLine();
+                String[] splits = input.split(" ", 2);
+                String keyword = splits[0].toLowerCase();
 
-            if (keyword.equals("bye") && splits.length == 1) {
-                printGoodbye();
-                break;
-            }
+                if (keyword.equals("bye") && splits.length == 1) {
+                    printGoodbye();
+                    break;
+                }
 
-            switch (keyword) {
-                case "list":
-                    if (splits.length == 1) {
-                        printList(list, count);
-                        break;
-                    }
-
-                case "mark":
-                case "unmark":
-                    try {
-                        if (isMark(input, count)) {
-                            int num = Integer.parseInt(input.split(" ")[1]);
-                            list[num - 1].mark();
+                switch (keyword) {
+                    case "list":
+                        if (splits.length == 1) {
+                            printList(list, count);
+                            break;
+                        } else {
+                            throw new BobbyException("OOPS! list keyword should not have anything behind it.");
                         }
-                        if (isUnmark(input, count)) {
-                            int num = Integer.parseInt(input.split(" ")[1]);
-                            list[num - 1].unmark();
+
+                    case "mark":
+                    case "unmark":
+                        try {
+                            if (isMark(input, count)) {
+                                int num = Integer.parseInt(input.split(" ")[1]);
+                                if (num > count) {
+                                    throw new BobbyException("OOPS! You cant mark a task that does not exist.");
+                                }
+                                list[num - 1].mark();
+                            }
+                            if (isUnmark(input, count)) {
+                                int num = Integer.parseInt(input.split(" ")[1]);
+                                if (num > count) {
+                                    throw new BobbyException("OOPS! You cant unmark a task that does not exist.");
+                                }
+                                list[num - 1].unmark();
+                            }
+                        } catch (NumberFormatException e) {
+                            throw new BobbyException("OOPS! Task to mark/unmark must be an integer!");
+                        } finally {
+                            break;
                         }
-                    } catch (NumberFormatException e) {
-                        ;
-                    } finally {
+
+                    case "todo":
+                        if (isToDo(input)) {
+                            addToDo(list, count, input);
+                            count++;
+                        } else {
+                            throw new BobbyException("OOPS! Description of todo cannot be empty.");
+                        }
                         break;
-                    }
 
-                case "todo":
-                    if (isToDo(input)) {
-                        addToDo(list, count, input);
-                        count++;
-                    }
-                    break;
+                    case "deadline":
+                        if (isDeadline(input)) {
+                            addDeadline(list, count, input);
+                            count++;
+                        } else {
+                            throw new BobbyException("OOPS! Setting a deadline should follow this format\n" +
+                                    "    'deadline {description} /by {by}'.");
+                        }
+                        break;
 
-                case "deadline":
-                    if(isDeadline(input)) {
-                        addDeadline(list, count, input);
-                        count++;
-                    }
-                    break;
+                    case "event":
+                        if (isEvent(input)) {
+                            addEvent(list, count, input);
+                            count++;
+                        } else {
+                            throw new BobbyException("OOPS! Setting a deadline should follow this format\n" +
+                                    "    'event {description} /from {from} /to {to}'.");
+                        }
+                        break;
 
-                case "event":
-                    if (isEvent(input)) {
-                        addEvent(list, count, input);
-                        count++;
-                    }
-                    break;
-
-                default:
+                    default:
+                        throw new BobbyException("OOPS! I have no idea what this means");
+                }
+            } catch (BobbyException e) {
+                System.out.println("    ______________________________");
+                System.out.println("    " + e.getMessage());
+                System.out.println("    ______________________________");
             }
         }
     }

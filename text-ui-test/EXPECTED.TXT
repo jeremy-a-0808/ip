@@ -3,9 +3,15 @@
     What can I do for you?
     ______________________________
     ______________________________
+    OOPS! I have no idea what this means
+    ______________________________
+    ______________________________
     Got it. I've added this task:
       [T][ ] task1
     Now you have 1 tasks in the list
+    ______________________________
+    ______________________________
+    OOPS! Description of todo cannot be empty.
     ______________________________
     ______________________________
     Got it. I've added this task:
@@ -13,9 +19,17 @@
     Now you have 2 tasks in the list
     ______________________________
     ______________________________
+    OOPS! Setting a deadline should follow this format
+    'deadline {description} /by {by}'.
+    ______________________________
+    ______________________________
     Got it. I've added this task:
       [E][ ] task3 (from: monday to: sunday)
     Now you have 3 tasks in the list
+    ______________________________
+    ______________________________
+    OOPS! Setting a deadline should follow this format
+    'event {description} /from {from} /to {to}'.
     ______________________________
     ______________________________
     Here are the tasks in your list:
@@ -40,6 +54,9 @@
     1.[T][ ] task1
     2.[D][ ] task2 (by: sunday)
     3.[E][ ] task3 (from: monday to: sunday)
+    ______________________________
+    ______________________________
+    OOPS! list keyword should not have anything behind it.
     ______________________________
     ______________________________
     Bye. Hope to see you again soon!
