@@ -3,6 +3,17 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Bobby {
+    public enum Keyword {
+        BYE,
+        LIST,
+        MARK,
+        UNMARK,
+        DELETE,
+        TODO,
+        DEADLINE,
+        EVENT
+    }
+
     public static void addTask(ArrayList<Task> list, String input) {
         System.out.println("    ______________________________");
         System.out.println("    added: " + input);
@@ -130,15 +141,21 @@ public class Bobby {
             try {
                 input = scanner.nextLine();
                 String[] splits = input.split(" ", 2);
-                String keyword = splits[0].toLowerCase();
+                Keyword keywordEnum;
 
-                if (keyword.equals("bye") && splits.length == 1) {
+                try {
+                    keywordEnum = Keyword.valueOf(splits[0].toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    throw new BobbyException("OOPS! I have no idea what this means");
+                }
+
+                if (keywordEnum == Keyword.BYE && splits.length == 1) {
                     printGoodbye();
                     break;
                 }
 
-                switch (keyword) {
-                    case "list":
+                switch (keywordEnum) {
+                    case LIST:
                         if (splits.length == 1) {
                             printList(list);
                             break;
@@ -146,9 +163,9 @@ public class Bobby {
                             throw new BobbyException("OOPS! list keyword should not have anything behind it.");
                         }
 
-                    case "mark":
-                    case "unmark":
-                    case "delete":
+                    case MARK:
+                    case UNMARK:
+                    case DELETE:
                         if (splits.length == 1) {
                             throw new BobbyException("OOPS! mark/unmark/delete must be in the format 'mark/unmark/delete {taskNumber}'");
                         }
@@ -175,7 +192,7 @@ public class Bobby {
 
                         break;
 
-                    case "todo":
+                    case TODO:
                         if (isToDo(input)) {
                             addToDo(list, input);
                         } else {
@@ -183,7 +200,7 @@ public class Bobby {
                         }
                         break;
 
-                    case "deadline":
+                    case DEADLINE:
                         if (isDeadline(input)) {
                             addDeadline(list, input);
                         } else {
@@ -192,7 +209,7 @@ public class Bobby {
                         }
                         break;
 
-                    case "event":
+                    case EVENT:
                         if (isEvent(input)) {
                             addEvent(list, input);
                         } else {
@@ -202,7 +219,7 @@ public class Bobby {
                         break;
 
                     default:
-                        throw new BobbyException("OOPS! I have no idea what this means");
+                        ;
                 }
             } catch (BobbyException e) {
                 System.out.println("    ______________________________");
