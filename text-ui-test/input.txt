@@ -2,15 +2,24 @@ randomtextfails
 todo task1
 todo
 deadline task2 /by sunday
-deadline noslashandby shouldfail
+deadline taskWithoutBy
 event task3 /from monday /to sunday
-event noslashandfrom fails
+event taskNoFromOrTo
 list
+list extraArg
+mark
 mark 1
 list
-mark 4
-mark nonnumericalshouldfail
+mark 5
+mark notANumber
+unmark
 unmark 1
 list
-list failsbecausemorethan1word
+unmark 5
+unmark notANumber
+delete
+delete 1
+list
+delete 5
+delete notANumber
 bye

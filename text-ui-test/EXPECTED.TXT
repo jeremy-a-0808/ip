@@ -37,6 +37,12 @@
     2.[D][ ] task2 (by: sunday)
     3.[E][ ] task3 (from: monday to: sunday)
     ______________________________
+    ______________________________
+    OOPS! list keyword should not have anything behind it.
+    ______________________________
+    ______________________________
+    OOPS! mark/unmark/delete must be in the format 'mark/unmark/delete {taskNumber}'
+    ______________________________
     Nice! I've marked this task as done:
       [T][X] task1
     ______________________________
@@ -45,6 +51,15 @@
     1.[T][X] task1
     2.[D][ ] task2 (by: sunday)
     3.[E][ ] task3 (from: monday to: sunday)
+    ______________________________
+    ______________________________
+    OOPS! You cant mark/unmark/delete a task that does not exist.
+    ______________________________
+    ______________________________
+    OOPS! Task to mark/unmark/delete must be an integer!
+    ______________________________
+    ______________________________
+    OOPS! mark/unmark/delete must be in the format 'mark/unmark/delete {taskNumber}'
     ______________________________
     OK, I've marked this task as not done yet:
       [T][ ] task1
@@ -56,7 +71,29 @@
     3.[E][ ] task3 (from: monday to: sunday)
     ______________________________
     ______________________________
-    OOPS! list keyword should not have anything behind it.
+    OOPS! You cant mark/unmark/delete a task that does not exist.
+    ______________________________
+    ______________________________
+    OOPS! Task to mark/unmark/delete must be an integer!
+    ______________________________
+    ______________________________
+    OOPS! mark/unmark/delete must be in the format 'mark/unmark/delete {taskNumber}'
+    ______________________________
+    ______________________________
+    Noted. I've removed this task:
+    [T][ ] task1
+    Now you have 2 tasks in the list
+    ______________________________
+    ______________________________
+    Here are the tasks in your list:
+    1.[D][ ] task2 (by: sunday)
+    2.[E][ ] task3 (from: monday to: sunday)
+    ______________________________
+    ______________________________
+    OOPS! You cant mark/unmark/delete a task that does not exist.
+    ______________________________
+    ______________________________
+    OOPS! Task to mark/unmark/delete must be an integer!
     ______________________________
     ______________________________
     Bye. Hope to see you again soon!

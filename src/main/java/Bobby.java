@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Bobby {
@@ -26,6 +27,16 @@ public class Bobby {
     public static void printGoodbye() {
         System.out.println("    ______________________________");
         System.out.println("    Bye. Hope to see you again soon!");
+        System.out.println("    ______________________________");
+    }
+
+    public static void deleteTask(ArrayList<Task> list, int num) {
+        Task task = list.get(num - 1);
+        list.remove(num - 1);
+        System.out.println("    ______________________________");
+        System.out.println("    Noted. I've removed this task:");
+        System.out.println("    " + task);
+        System.out.println("    Now you have " + list.size() + " tasks in the list");
         System.out.println("    ______________________________");
     }
 
@@ -137,26 +148,32 @@ public class Bobby {
 
                     case "mark":
                     case "unmark":
-                        try {
-                            if (isMark(list, input)) {
-                                int num = Integer.parseInt(input.split(" ")[1]);
-                                if (num > list.size()) {
-                                    throw new BobbyException("OOPS! You cant mark a task that does not exist.");
-                                }
-                                list.get(num - 1).mark();
-                            }
-                            if (isUnmark(list, input)) {
-                                int num = Integer.parseInt(input.split(" ")[1]);
-                                if (num > list.size()) {
-                                    throw new BobbyException("OOPS! You cant unmark a task that does not exist.");
-                                }
-                                list.get(num - 1).unmark();
-                            }
-                        } catch (NumberFormatException e) {
-                            throw new BobbyException("OOPS! Task to mark/unmark must be an integer!");
-                        } finally {
-                            break;
+                    case "delete":
+                        if (splits.length == 1) {
+                            throw new BobbyException("OOPS! mark/unmark/delete must be in the format 'mark/unmark/delete {taskNumber}'");
                         }
+
+                        int num;
+
+                        try {
+                            num = Integer.parseInt(splits[1]);
+                        } catch (NumberFormatException e) {
+                            throw new BobbyException("OOPS! Task to mark/unmark/delete must be an integer!");
+                        }
+
+                        if (num > list.size()) {
+                            throw new BobbyException("OOPS! You cant mark/unmark/delete a task that does not exist.");
+                        }
+
+                        if (isMark(list, input)) {
+                            list.get(num - 1).mark();
+                        } else if (isUnmark(list, input)) {
+                            list.get(num - 1).unmark();
+                        } else {
+                            deleteTask(list, num);
+                        }
+
+                        break;
 
                     case "todo":
                         if (isToDo(input)) {
