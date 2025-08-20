@@ -1,25 +1,26 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bobby {
-    public static void addTask(Task[] list, int count, String input) {
+    public static void addTask(ArrayList<Task> list, String input) {
         System.out.println("    ______________________________");
         System.out.println("    added: " + input);
-        list[count] = new Task(input);
+        list.add(new Task(input));
         System.out.println("    ______________________________");
     }
 
-    public static boolean isMark(String input, int count) {
+    public static boolean isMark(ArrayList<Task> list, String input) {
         String[] splits = input.split(" ");
         return (splits.length == 2
                 && splits[0].equalsIgnoreCase("mark")
-                && Integer.parseInt(splits[1]) <= count);
+                && Integer.parseInt(splits[1]) <= list.size());
     }
 
-    public static boolean isUnmark(String input, int count) {
+    public static boolean isUnmark(ArrayList<Task> list, String input) {
         String[] splits = input.split(" ");
         return (splits.length == 2
                 && splits[0].equalsIgnoreCase("unmark")
-                && Integer.parseInt(splits[1]) <= count);
+                && Integer.parseInt(splits[1]) <= list.size());
     }
 
     public static void printGoodbye() {
@@ -28,11 +29,11 @@ public class Bobby {
         System.out.println("    ______________________________");
     }
 
-    public static void printList(Task[] list, int count) {
+    public static void printList(ArrayList<Task> list) {
         System.out.println("    ______________________________");
         System.out.println("    Here are the tasks in your list:");
-        for (int i = 0; i < count; i++) {
-            System.out.println("    " + (i + 1) + "." + list[i]);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("    " + (i + 1) + "." + list.get(i));
         }
         System.out.println("    ______________________________");
     }
@@ -74,44 +75,43 @@ public class Bobby {
         return false;
     }
 
-    public static void addToDo(Task[] list, int count, String input) {
+    public static void addToDo(ArrayList<Task> list, String input) {
         System.out.println("    ______________________________");
         System.out.println("    Got it. I've added this task:");
-        list[count] = new ToDo(input.split(" ", 2)[1]);
-        System.out.println("      " + list[count]);
-        System.out.println("    Now you have " + (count + 1) + " tasks in the list");
+        list.add(new ToDo(input.split(" ", 2)[1]));
+        System.out.println("      " + list.get(list.size() - 1));
+        System.out.println("    Now you have " + list.size() + " tasks in the list");
         System.out.println("    ______________________________");
     }
 
-    public static void addDeadline(Task[] list, int count, String input) {
+    public static void addDeadline(ArrayList<Task> list, String input) {
         System.out.println("    ______________________________");
         System.out.println("    Got it. I've added this task:");
         String[] splits = input.split(" /");
-        list[count] = new Deadline(splits[0].substring(9), splits[1].substring(3));
-        System.out.println("      " + list[count]);
-        System.out.println("    Now you have " + (count + 1) + " tasks in the list");
+        list.add(new Deadline(splits[0].substring(9), splits[1].substring(3)));
+        System.out.println("      " + list.get(list.size() - 1));
+        System.out.println("    Now you have " + list.size() + " tasks in the list");
         System.out.println("    ______________________________");
     }
 
-    public static void addEvent(Task[] list, int count, String input) {
+    public static void addEvent(ArrayList<Task> list, String input) {
         System.out.println("    ______________________________");
         System.out.println("    Got it. I've added this task:");
         String[] splits = input.split(" /");
-        list[count] = new Event(
+        list.add(new Event(
                 splits[0].substring(6),
                 splits[1].substring(5),
                 splits[2].substring(3)
-        );
-        System.out.println("      " + list[count]);
-        System.out.println("    Now you have " + (count + 1) + " tasks in the list");
+        ));
+        System.out.println("      " + list.get(list.size() - 1));
+        System.out.println("    Now you have " + list.size() + " tasks in the list");
         System.out.println("    ______________________________");
     }
 
     public static void main(String[] args) throws BobbyException {
         Scanner scanner = new Scanner(System.in);
         String input;
-        Task[] list = new Task[100];
-        int count = 0;
+        ArrayList<Task> list = new ArrayList<>();
 
         printWelcome();
 
@@ -129,7 +129,7 @@ public class Bobby {
                 switch (keyword) {
                     case "list":
                         if (splits.length == 1) {
-                            printList(list, count);
+                            printList(list);
                             break;
                         } else {
                             throw new BobbyException("OOPS! list keyword should not have anything behind it.");
@@ -138,19 +138,19 @@ public class Bobby {
                     case "mark":
                     case "unmark":
                         try {
-                            if (isMark(input, count)) {
+                            if (isMark(list, input)) {
                                 int num = Integer.parseInt(input.split(" ")[1]);
-                                if (num > count) {
+                                if (num > list.size()) {
                                     throw new BobbyException("OOPS! You cant mark a task that does not exist.");
                                 }
-                                list[num - 1].mark();
+                                list.get(num - 1).mark();
                             }
-                            if (isUnmark(input, count)) {
+                            if (isUnmark(list, input)) {
                                 int num = Integer.parseInt(input.split(" ")[1]);
-                                if (num > count) {
+                                if (num > list.size()) {
                                     throw new BobbyException("OOPS! You cant unmark a task that does not exist.");
                                 }
-                                list[num - 1].unmark();
+                                list.get(num - 1).unmark();
                             }
                         } catch (NumberFormatException e) {
                             throw new BobbyException("OOPS! Task to mark/unmark must be an integer!");
@@ -160,8 +160,7 @@ public class Bobby {
 
                     case "todo":
                         if (isToDo(input)) {
-                            addToDo(list, count, input);
-                            count++;
+                            addToDo(list, input);
                         } else {
                             throw new BobbyException("OOPS! Description of todo cannot be empty.");
                         }
@@ -169,8 +168,7 @@ public class Bobby {
 
                     case "deadline":
                         if (isDeadline(input)) {
-                            addDeadline(list, count, input);
-                            count++;
+                            addDeadline(list, input);
                         } else {
                             throw new BobbyException("OOPS! Setting a deadline should follow this format\n" +
                                     "    'deadline {description} /by {by}'.");
@@ -179,8 +177,7 @@ public class Bobby {
 
                     case "event":
                         if (isEvent(input)) {
-                            addEvent(list, count, input);
-                            count++;
+                            addEvent(list, input);
                         } else {
                             throw new BobbyException("OOPS! Setting a deadline should follow this format\n" +
                                     "    'event {description} /from {from} /to {to}'.");
