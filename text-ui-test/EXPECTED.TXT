@@ -3,7 +3,7 @@
     What can I do for you?
     ______________________________
     ______________________________
-    OOPS! I have no idea what this means
+    command not recognised.
     ______________________________
     ______________________________
     Got it. I've added this task:
@@ -11,7 +11,7 @@
     Now you have 1 tasks in the list
     ______________________________
     ______________________________
-    OOPS! Description of todo cannot be empty.
+    todo requires arguments.
     ______________________________
     ______________________________
     Got it. I've added this task:
@@ -19,8 +19,7 @@
     Now you have 2 tasks in the list
     ______________________________
     ______________________________
-    OOPS! Setting a deadline should follow this format
-    'deadline {description} /by {by}'.
+    deadline has the wrong format.
     ______________________________
     ______________________________
     Got it. I've added this task:
@@ -28,8 +27,7 @@
     Now you have 3 tasks in the list
     ______________________________
     ______________________________
-    OOPS! Setting a deadline should follow this format
-    'event {description} /from {from} /to {to}'.
+    event has the wrong format.
     ______________________________
     ______________________________
     Here are the tasks in your list:
@@ -38,10 +36,10 @@
     3.[E][ ] task3 (from: monday to: sunday)
     ______________________________
     ______________________________
-    OOPS! list keyword should not have anything behind it.
+    list should not have any arguments.
     ______________________________
     ______________________________
-    OOPS! mark/unmark/delete must be in the format 'mark/unmark/delete {taskNumber}'
+    mark requires arguments.
     ______________________________
     Nice! I've marked this task as done:
       [T][X] task1
@@ -53,13 +51,13 @@
     3.[E][ ] task3 (from: monday to: sunday)
     ______________________________
     ______________________________
-    OOPS! You cant mark/unmark/delete a task that does not exist.
+    mark task does not exist.
     ______________________________
     ______________________________
-    OOPS! Task to mark/unmark/delete must be an integer!
+    mark task number must be an integer.
     ______________________________
     ______________________________
-    OOPS! mark/unmark/delete must be in the format 'mark/unmark/delete {taskNumber}'
+    unmark requires arguments.
     ______________________________
     OK, I've marked this task as not done yet:
       [T][ ] task1
@@ -71,13 +69,13 @@
     3.[E][ ] task3 (from: monday to: sunday)
     ______________________________
     ______________________________
-    OOPS! You cant mark/unmark/delete a task that does not exist.
+    unmark task does not exist.
     ______________________________
     ______________________________
-    OOPS! Task to mark/unmark/delete must be an integer!
+    unmark task number must be an integer.
     ______________________________
     ______________________________
-    OOPS! mark/unmark/delete must be in the format 'mark/unmark/delete {taskNumber}'
+    delete requires arguments.
     ______________________________
     ______________________________
     Noted. I've removed this task:
@@ -90,10 +88,10 @@
     2.[E][ ] task3 (from: monday to: sunday)
     ______________________________
     ______________________________
-    OOPS! You cant mark/unmark/delete a task that does not exist.
+    delete task does not exist.
     ______________________________
     ______________________________
-    OOPS! Task to mark/unmark/delete must be an integer!
+    delete task number must be an integer.
     ______________________________
     ______________________________
     Bye. Hope to see you again soon!
