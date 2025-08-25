@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDateTime;
 
 /**
  * Stores the task list and allows users to add, delete, mark, unmark tasks in the task list
@@ -45,7 +44,7 @@ public class TaskList {
                 if (split.length == 2 && split[1].substring(0, 2).equalsIgnoreCase("by")) {
                     taskList.add(new Deadline(split[0], isMark, split[1].substring(3)));
                 } else {
-                    throw new BobbyException("Use this format: deadline {name} /by dd/MM/yyyy HHmm");
+                    throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
                 }
             } else {
                 if (split.length == 3 &&
@@ -54,7 +53,7 @@ public class TaskList {
                 ) {
                     taskList.add(new Event(split[0], isMark, split[1].substring(5), split[2].substring(3)));
                 } else {
-                    throw new BobbyException("Use this format: event {name} /from dd/MM/yyyy HHmm /to dd/MM/yyyy HHmm");
+                    throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
                 }
             }
         }

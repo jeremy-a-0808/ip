@@ -8,7 +8,7 @@ public class Deadline extends Task {
 
     public Deadline(String description, boolean isMark, String by) throws BobbyException {
         super(description, isMark);
-        this.by = this.parseString(by);
+        this.by = parseString(by);
     }
 
     /**
@@ -28,11 +28,11 @@ public class Deadline extends Task {
      */
     @Override
     public String toStorage() {
-        return super.toStorage() + " /by " + this.datetimeToStorage(by);
+        return super.toStorage() + " /by " + dateTimeToStorage(by);
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.datetimeToString(by) + ")";
+        return "[D]" + super.toString() + " (by: " + dateTimeToString(by) + ")";
     }
 }

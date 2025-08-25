@@ -52,10 +52,10 @@ public abstract class Task {
      */
     public LocalDateTime parseString(String datetime) throws BobbyException{
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
             return LocalDateTime.parse(datetime, formatter);
         } catch (DateTimeParseException e) {
-            throw new BobbyException("by/from/to must be in the format dd/MM/yyyy HHmm");
+            throw new BobbyException("by/from/to must be in the format yyyy-MM-dd HHmm");
         } catch (NullPointerException e) {
             throw new BobbyException("by/from/to cannot be left empty");
         }
@@ -68,12 +68,12 @@ public abstract class Task {
      * @return String
      */
     public String datetimeToString(LocalDateTime datetime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
         return datetime.format(formatter);
     }
 
     public String datetimeToStorage(LocalDateTime datetime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return datetime.format(formatter);
     }
 
