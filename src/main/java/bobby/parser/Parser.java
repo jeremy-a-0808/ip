@@ -49,6 +49,10 @@ public class Parser {
             Ui.showMessage(taskList.toString());
             break;
 
+        case FIND:
+            Ui.showMessage(taskList.findTasks(split[1]).toString());
+            break;
+
         case MARK:
         case UNMARK:
         case DELETE:
@@ -71,6 +75,7 @@ public class Parser {
                 Ui.showMessage("I've deleted this task.\n   " + task);
             }
             break;
+
 
         case TODO:
             taskList.addTask(0, false, split[1]);
@@ -95,6 +100,7 @@ public class Parser {
         MARK,
         UNMARK,
         DELETE,
+        FIND,
         TODO,
         DEADLINE,
         EVENT;

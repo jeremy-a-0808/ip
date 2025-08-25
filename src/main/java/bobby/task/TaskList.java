@@ -126,6 +126,16 @@ public class TaskList {
         return this.getTask(taskList.size());
     }
 
+    public TaskList findTasks(String search) throws BobbyException {
+        List<String> result = new ArrayList<>();
+        for (Task task: taskList) {
+            if (task.description.contains(search)) {
+                result.add(task.toStorage());
+            }
+        }
+        return new TaskList(result);
+    }
+
     /**
      * transforms current taskList into a List<String> to be saved by Storage.
      * Example Format:
