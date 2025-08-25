@@ -1,14 +1,14 @@
 package bobby.storage;
 
-import bobby.exception.BobbyException;
-
 import java.io.File;
-import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import bobby.exception.BobbyException;
 
 /**
  * Saves the final TaskList. When loaded, returns a List<String>
@@ -17,7 +17,8 @@ import java.util.Scanner;
 public class Storage {
     private static final String FILE_PATH = "./data/bobby.txt";
 
-    public Storage() {}
+    public Storage() {
+    }
 
     /**
      * Loads TaskList from previous runs of Bobby from bobby.txt
@@ -49,12 +50,12 @@ public class Storage {
     public void save(List<String> tasks) throws BobbyException {
         try {
             FileWriter fw = new FileWriter(FILE_PATH);
-            for (String task: tasks) {
+            for (String task : tasks) {
                 fw.write(task);
                 fw.write(System.lineSeparator());
             }
             fw.close();
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new BobbyException("An unknown error has occurred. " + e.getMessage());
         }
     }

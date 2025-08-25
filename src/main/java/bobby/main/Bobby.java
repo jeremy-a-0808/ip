@@ -26,6 +26,10 @@ public class Bobby {
         parser = new Parser(taskList);
     }
 
+    public static void main(String[] args) {
+        new Bobby().run();
+    }
+
     public void run() {
         ui.run(parser);
         try {
@@ -33,9 +37,5 @@ public class Bobby {
         } catch (BobbyException e) {
             ui.showMessage(e.getMessage());
         }
-    }
-
-    public static void main(String[] args) {
-        new Bobby().run();
     }
 }

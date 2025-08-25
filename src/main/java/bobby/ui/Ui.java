@@ -1,9 +1,9 @@
 package bobby.ui;
 
+import java.util.Scanner;
+
 import bobby.exception.BobbyException;
 import bobby.parser.Parser;
-
-import java.util.Scanner;
 
 public class Ui {
     private Scanner scanner;
@@ -20,7 +20,7 @@ public class Ui {
     public static void showMessage(String message) {
         System.out.println("    ________________________________________________________________");
         String[] lines = message.split("\\R");
-        for (String line: lines) {
+        for (String line : lines) {
             System.out.println("    " + line);
         }
         System.out.println("    ________________________________________________________________");

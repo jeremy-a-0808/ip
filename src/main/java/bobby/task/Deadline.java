@@ -1,8 +1,8 @@
 package bobby.task;
 
-import bobby.exception.BobbyException;
-
 import java.time.LocalDateTime;
+
+import bobby.exception.BobbyException;
 
 /**
  * subclass of Task

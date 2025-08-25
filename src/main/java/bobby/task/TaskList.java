@@ -1,9 +1,9 @@
 package bobby.task;
 
-import bobby.exception.BobbyException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import bobby.exception.BobbyException;
 
 /**
  * Stores the task list and allows users to add, delete, mark, unmark tasks in the task list
@@ -22,7 +22,7 @@ public class TaskList {
         int taskType;
         boolean isMark;
 
-        for (String task: tasks) {
+        for (String task : tasks) {
             String[] split = task.split(" \\| ");
             taskType = Integer.parseInt(split[0]);
             isMark = split[1].equals("1");
@@ -35,8 +35,8 @@ public class TaskList {
      * if not throw BobbyException when user sends input.
      *
      * @param taskType 0 is ToDo, 1 is Deadline, 2 is Event
-     * @param content includes the description, and the dates if necessary. Does not include command.
-     * @param isMark whether the task has been marked
+     * @param content  includes the description, and the dates if necessary. Does not include command.
+     * @param isMark   whether the task has been marked
      * @throws BobbyException if content does not match required format
      */
     public void addTask(int taskType, boolean isMark, String content) throws BobbyException {
@@ -141,7 +141,7 @@ public class TaskList {
         int taskType;
         int isMark;
 
-        for (Task task: taskList) {
+        for (Task task : taskList) {
             output.add(task.toStorage());
         }
         return output;

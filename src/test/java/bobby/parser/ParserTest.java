@@ -1,13 +1,14 @@
 package bobby.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import bobby.exception.BobbyException;
 import bobby.task.TaskList;
-
-import java.util.List;
 
 public class ParserTest {
     private TaskList taskList;

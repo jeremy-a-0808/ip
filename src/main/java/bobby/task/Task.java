@@ -1,10 +1,10 @@
 package bobby.task;
 
-import bobby.exception.BobbyException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import bobby.exception.BobbyException;
 
 /**
  * abstract class that todo, deadline and event inherit from
