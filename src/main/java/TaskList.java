@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDateTime;
 
 /**
  * Stores the task list and allows users to add, delete, mark, unmark tasks in the task list
@@ -44,7 +45,7 @@ public class TaskList {
                 if (split.length == 2 && split[1].substring(0, 2).equalsIgnoreCase("by")) {
                     taskList.add(new Deadline(split[0], isMark, split[1].substring(3)));
                 } else {
-                    throw new BobbyException("This is not the right format for adding a task.");
+                    throw new BobbyException("Use this format: deadline {name} /by dd/MM/yyyy HHmm");
                 }
             } else {
                 if (split.length == 3 &&
@@ -53,7 +54,7 @@ public class TaskList {
                 ) {
                     taskList.add(new Event(split[0], isMark, split[1].substring(5), split[2].substring(3)));
                 } else {
-                    throw new BobbyException("This is not the right format for adding a task.");
+                    throw new BobbyException("Use this format: event {name} /from dd/MM/yyyy HHmm /to dd/MM/yyyy HHmm");
                 }
             }
         }
@@ -80,7 +81,7 @@ public class TaskList {
      */
     public void markTask(int taskNum) throws BobbyException {
         if (taskNum <= 0 || taskNum > taskList.size()) {
-            throw new BobbyException("You can't delete a task that does not exist");
+            throw new BobbyException("You can't mark a task that does not exist");
         }
         taskList.get(taskNum - 1).mark();
     }
@@ -93,7 +94,7 @@ public class TaskList {
      */
     public void unmarkTask(int taskNum) throws BobbyException {
         if (taskNum <= 0 || taskNum > taskList.size()) {
-            throw new BobbyException("You can't delete a task that does not exist");
+            throw new BobbyException("You can't unmark a task that does not exist");
         }
         taskList.get(taskNum - 1).unmark();
     }

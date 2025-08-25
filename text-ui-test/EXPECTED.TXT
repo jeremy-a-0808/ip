@@ -13,7 +13,7 @@
     todo requires arguments.
     ________________________________________________________________
     ________________________________________________________________
-    This is not the right format for adding a task.
+    Use this format: deadline {name} /by dd/MM/yyyy HHmm
     ________________________________________________________________
     ________________________________________________________________
     by/from/to must be in the format dd/MM/yyyy HHmm
@@ -23,7 +23,7 @@
        [D][ ] deadline1 (by: 01-01-2025 10:10)
     ________________________________________________________________
     ________________________________________________________________
-    This is not the right format for adding a task.
+    Use this format: event {name} /from dd/MM/yyyy HHmm /to dd/MM/yyyy HHmm
     ________________________________________________________________
     ________________________________________________________________
     by/from/to must be in the format dd/MM/yyyy HHmm
