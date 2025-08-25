@@ -55,11 +55,11 @@ public class Parser {
 
         switch (commandEnum) {
             case BYE:
-                Bobby.printGoodbye();
+                Ui.showGoodbye();
                 return false;
 
             case LIST:
-                System.out.println(taskList);
+                Ui.showMessage(taskList.toString());
                 break;
 
             case MARK:
@@ -69,26 +69,33 @@ public class Parser {
 
                 try {
                     num = Integer.parseInt(split[1]);
-                    if (split[0].equalsIgnoreCase("mark")) {
-                        taskList.markTask(num);
-                    } else if (split[0].equalsIgnoreCase("unmark")) {
-                        taskList.unmarkTask(num);
-                    } else {
-                        taskList.deleteTask(num);
-                    }
                 } catch (NumberFormatException e) {
                     throw new BobbyException(command + " task number must be an integer.");
                 }
+                    if (split[0].equalsIgnoreCase("mark")) {
+                        taskList.markTask(num);
+                        Ui.showMessage("I've marked this task.\n    " + taskList.getTask(num));
+                    } else if (split[0].equalsIgnoreCase("unmark")) {
+                        taskList.unmarkTask(num);
+                        Ui.showMessage("I've unmarked this task.\n  " + taskList.getTask(num));
+                    } else {
+                        Task task = taskList.getTask(num);
+                        taskList.deleteTask(num);
+                        Ui.showMessage("I've deleted this task.\n   " + task);
+                    }
                 break;
 
             case TODO:
-                taskList.addTask(0, split[1], false);
+                taskList.addTask(0, false, split[1]);
+                Ui.showMessage("I've added this ToDo.\n   " + taskList.getLastTask());
                 break;
             case DEADLINE:
-                taskList.addTask(1, split[1], false);
+                taskList.addTask(1,false, split[1]);
+                Ui.showMessage("I've added this Deadline.\n   " + taskList.getLastTask());
                 break;
             case EVENT:
-                taskList.addTask(2, split[1], false);
+                taskList.addTask(2, false, split[1]);
+                Ui.showMessage("I've added this Event.\n   " + taskList.getLastTask());
                 break;
         }
 

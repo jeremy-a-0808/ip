@@ -1,3 +1,6 @@
+/**
+ * subclass of Task
+ */
 public class Event extends Task {
     protected String from;
     protected String to;
@@ -8,11 +11,21 @@ public class Event extends Task {
         this.to = to;
     }
 
+    /**
+     * used to categorise tasks
+     *
+     * @return task type
+     */
     @Override
     public int getTaskType() {
         return 2;
     }
 
+    /**
+     * converting the task to a String friendly format
+     *
+     * @return String that is saved in storage
+     */
     @Override
     public String toStorage() {
         return super.toStorage() + " / " + from + " / " + to;

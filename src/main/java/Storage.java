@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,7 +22,7 @@ public class Storage {
      * @return List<String> of Tasks
      */
     public List<String> load() {
-        List<String> tasks = List.of();
+        List<String> tasks = new ArrayList<>();
         try {
             File f = new File(FILE_PATH);
             Scanner s = new Scanner(f);

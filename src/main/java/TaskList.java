@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Stores the task list and allows users to add, delete, mark, unmark tasks in the task list
+ */
 public class TaskList {
     private ArrayList<Task> taskList;
 
@@ -12,14 +15,14 @@ public class TaskList {
      */
     public TaskList(List<String> tasks) throws BobbyException {
         this.taskList = new ArrayList<>();
-        int taskType = 0;
-        boolean isMark = false;
+        int taskType;
+        boolean isMark;
 
         for (String task: tasks) {
-            String[] split = task.split(" | ");
+            String[] split = task.split(" \\| ");
             taskType = Integer.parseInt(split[0]);
-            isMark = split[1] == "1" ? true : false;
-            this.addTask(taskType, split[2],  isMark);
+            isMark = split[1].equals("1");
+            this.addTask(taskType, isMark, split[2]);
         }
     }
 
@@ -32,7 +35,7 @@ public class TaskList {
      * @param isMark whether the task has been marked
      * @throws BobbyException if content does not match required format
      */
-    public void addTask(int taskType, String content, boolean isMark) throws BobbyException {
+    public void addTask(int taskType, boolean isMark, String content) throws BobbyException {
         if (taskType == 0) {
             taskList.add(new ToDo(content, isMark));
         } else {
@@ -40,16 +43,18 @@ public class TaskList {
             if (taskType == 1) {
                 if (split.length == 2 && split[1].substring(0, 2).equalsIgnoreCase("by")) {
                     taskList.add(new Deadline(split[0], isMark, split[1].substring(3)));
+                } else {
+                    throw new BobbyException("This is not the right format for adding a task.");
                 }
-            } else if (taskType == 2) {
+            } else {
                 if (split.length == 3 &&
                     split[1].substring(0, 4).equalsIgnoreCase("from") &&
                     split[2].substring(0, 2).equalsIgnoreCase("to")
                 ) {
                     taskList.add(new Event(split[0], isMark, split[1].substring(5), split[2].substring(3)));
+                } else {
+                    throw new BobbyException("This is not the right format for adding a task.");
                 }
-            } else {
-                throw new BobbyException("This is not the right format for adding a task.");
             }
         }
     }
@@ -93,6 +98,29 @@ public class TaskList {
         taskList.get(taskNum - 1).unmark();
     }
 
+    /**
+     * retrieve task for displaying
+     *
+     * @param taskNum 1-indexed
+     * @return task
+     * @throws BobbyException if taskNum is out of range of taskList
+     */
+    public Task getTask(int taskNum) throws BobbyException {
+        if (taskNum <= 0 || taskNum > taskList.size()) {
+            throw new BobbyException("You can't delete a task that does not exist.");
+        }
+        return taskList.get(taskNum - 1);
+    }
+
+    /**
+     * retrieve last task for displaying
+     *
+     * @return last task in task list
+     * @throws BobbyException
+     */
+    public Task getLastTask() throws BobbyException {
+        return this.getTask(taskList.size());
+    }
 
     /**
      * transforms current taskList into a List<String> to be saved by Storage.
@@ -105,7 +133,7 @@ public class TaskList {
      * @return List of tasks in String format.
      */
     public List<String> saveTasks() {
-        List<String> output = List.of();
+        List<String> output = new ArrayList<>();
         int taskType;
         int isMark;
 
@@ -117,7 +145,7 @@ public class TaskList {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder();
+        StringBuilder str = new StringBuilder("Here are your tasks:\n");
         for (int i = 1; i <= taskList.size(); i++) {
             str.append(i + ". " + taskList.get(i - 1) + "\n");
         }
