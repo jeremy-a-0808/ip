@@ -7,6 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import bobby.exception.BobbyException;
 
 public class EventTest {
+    /**
+     * Checks that correct fields leads to Event creation
+     *
+     * @throws BobbyException
+     */
     @Test
     void testConstructorAndFields() throws BobbyException {
         Event event = new Event("Meeting", false, "2025-08-25 0900", "2025-08-25 1000");
@@ -17,6 +22,9 @@ public class EventTest {
         assertEquals(10, event.to.getHour());
     }
 
+    /**
+     * Checks that incorrect from leads to a BobbyException
+     */
     @Test
     void testConstructorInvalidFrom() {
         assertThrows(BobbyException.class, () -> {
@@ -24,6 +32,9 @@ public class EventTest {
         });
     }
 
+    /**
+     * Checks that incorrect to leads to a BobbyException
+     */
     @Test
     void testConstructorInvalidTo() {
         assertThrows(BobbyException.class, () -> {
