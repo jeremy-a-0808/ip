@@ -1,3 +1,7 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * abstract class that todo, deadline and event inherit from
  */
@@ -38,6 +42,43 @@ public abstract class Task {
      */
     public void unmark() {
         isMark = false;
+    }
+
+    /**
+     * parses user input into dateTime
+     *
+     * @param dateTime format yyyy-MM-dd HHmm
+     * @return LocalDateTime object
+     */
+    public LocalDateTime parseString(String dateTime) throws BobbyException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+            return LocalDateTime.parse(dateTime, formatter);
+        } catch (DateTimeParseException e) {
+            throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
+        }
+    }
+
+    /**
+     * returns String to be shown when user sends "list"
+     *
+     * @param dateTime
+     * @return dd/MM/yyyy HHmm format
+     */
+    public String dateTimeToString(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        return dateTime.format(formatter);
+    }
+
+    /**
+     * returns DateTime back to input format to keep in storage
+     *
+     * @param dateTime
+     * @return yyyy-MM-dd HHmm String
+     */
+    public String dateTimeToStorage(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        return dateTime.format(formatter);
     }
 
     /**

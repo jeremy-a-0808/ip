@@ -44,7 +44,7 @@ public class TaskList {
                 if (split.length == 2 && split[1].substring(0, 2).equalsIgnoreCase("by")) {
                     taskList.add(new Deadline(split[0], isMark, split[1].substring(3)));
                 } else {
-                    throw new BobbyException("This is not the right format for adding a task.");
+                    throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
                 }
             } else {
                 if (split.length == 3 &&
@@ -53,7 +53,7 @@ public class TaskList {
                 ) {
                     taskList.add(new Event(split[0], isMark, split[1].substring(5), split[2].substring(3)));
                 } else {
-                    throw new BobbyException("This is not the right format for adding a task.");
+                    throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
                 }
             }
         }
