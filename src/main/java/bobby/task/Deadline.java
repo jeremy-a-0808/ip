@@ -1,14 +1,18 @@
 package bobby.task;
 
+import bobby.exception.BobbyException;
+
+import java.time.LocalDateTime;
+
 /**
  * subclass of Task
  */
 public class Deadline extends Task {
-    protected String by;
+    protected LocalDateTime by;
 
-    public Deadline(String description, boolean isMark, String by) {
+    public Deadline(String description, boolean isMark, String by) throws BobbyException {
         super(description, isMark);
-        this.by = by;
+        this.by = parseString(by);
     }
 
     /**
@@ -28,11 +32,11 @@ public class Deadline extends Task {
      */
     @Override
     public String toStorage() {
-        return super.toStorage() + " / " + by;
+        return super.toStorage() + " /by " + datetimeToStorage(by);
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + datetimeToString(by) + ")";
     }
 }

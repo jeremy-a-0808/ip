@@ -1,16 +1,20 @@
 package bobby.task;
 
+import bobby.exception.BobbyException;
+
+import java.time.LocalDateTime;
+
 /**
  * subclass of Task
  */
 public class Event extends Task {
-    protected String from;
-    protected String to;
+    protected LocalDateTime from;
+    protected LocalDateTime to;
 
-    public Event(String description, boolean isMark, String from, String to) {
+    public Event(String description, boolean isMark, String from, String to) throws BobbyException {
         super(description, isMark);
-        this.from = from;
-        this.to = to;
+        this.from = parseString(from);
+        this.to = parseString(to);
     }
 
     /**
@@ -30,11 +34,11 @@ public class Event extends Task {
      */
     @Override
     public String toStorage() {
-        return super.toStorage() + " / " + from + " / " + to;
+        return super.toStorage() + " /from " + datetimeToStorage(from) + " /to " + datetimeToStorage(to);
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() + " (from: " + datetimeToString(from) + " to: " + datetimeToString(to) + ")";
     }
 }
