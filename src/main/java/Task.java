@@ -1,28 +1,35 @@
-public class Task {
+public abstract class Task {
     protected String description;
-    protected boolean isDone;
+    protected boolean isMark;
 
-    public Task(String description) {
+    public Task(String description, boolean isMark) {
         this.description = description;
-        this.isDone = false;
+        this.isMark = isMark;
     }
 
+    public abstract int getTaskType();
+
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isMark ? "X" : " "); // mark done task with X
     }
 
     public void mark() {
-        isDone = true;
+        isMark = true;
         System.out.println("    Nice! I've marked this task as done:");
         System.out.println("      " + this);
         System.out.println("    ______________________________");
     }
 
     public void unmark() {
-        isDone = false;
+        isMark = false;
         System.out.println("    OK, I've marked this task as not done yet:");
         System.out.println("      " + this);
         System.out.println("    ______________________________");
+    }
+
+    public String toStorage() {
+        int i = isMark ? 1 : 0;
+        return (getTaskType() + " | " + i + " | " + description);
     }
 
     @Override

@@ -6,47 +6,48 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Saves the commands executed by Bobby as a .txt file
- * When loaded, returns a List<String> that can then be
- * executed as commands by the chatbot to replicate the
- * previous list of tasks
- **/
+ * Saves the final TaskList. When loaded, returns a List<String>
+ * that can then be loaded by the TaskList class
+ */
 public class Storage {
     private static final String FILE_PATH = "./data/bobby.txt";
 
     public Storage() {}
 
     /**
-     * Loads commands from previous runs of Bobby from the bobby.txt file
+     * Loads TaskList from previous runs of Bobby from bobby.txt
+     * Empty list if file does not exist
      *
-     * @return List<String> of all previous commands
-     * @throws BobbyException if file does not exist, letting the user know that TaskList is empty
+     * @return List<String> of Tasks
      */
-    public List<String> load() throws BobbyException {
-        List<String> commands = List.of();
+    public List<String> load() {
+        List<String> tasks = List.of();
         try {
             File f = new File(FILE_PATH);
             Scanner s = new Scanner(f);
             while (s.hasNext()) {
-                commands.add(s.nextLine());
+                tasks.add(s.nextLine());
             }
-            return commands;
         } catch (FileNotFoundException e) {
-            throw new BobbyException("No file found. Empty task list initialised");
+            ;
         }
+        return tasks;
     }
 
     /**
      * Saves any command that is successfully executed by Bobby.
      * Creates bobby.txt file if it does not exist, then appends to it.
      *
-     * @param command command that user successfully executes
+     * @param tasks
      * @throws BobbyException if some unknown error occurs
      */
-    public void save(String command) throws BobbyException {
+    public void save(List<String> tasks) throws BobbyException {
         try {
-            FileWriter fw = new FileWriter(FILE_PATH, true);
-            fw.write(command);
+            FileWriter fw = new FileWriter(FILE_PATH);
+            for (String task: tasks) {
+                fw.write(task);
+                fw.write(System.lineSeparator());
+            }
             fw.close();
         } catch (IOException e){
             throw new BobbyException("An unknown error has occurred. " + e.getMessage());
