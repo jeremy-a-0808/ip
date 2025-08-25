@@ -19,6 +19,7 @@ unmark 1
 unmark 5
 unmark notANumber
 list
+find event1
 delete
 delete 1
 delete 5
