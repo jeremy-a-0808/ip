@@ -1,25 +1,25 @@
 randomtextfails
 todo task1
 todo
-deadline task2 /by sunday
-deadline taskWithoutBy
-event task3 /from monday /to sunday
-event taskNoFromOrTo
+deadline deadline1 /by sunday
+deadline deadlineWithoutBy
+event event1 /from monday /to sunday
+event eventNoFromOrTo
 list
 list extraArg
 mark
 mark 1
-list
 mark 5
 mark notANumber
+list
 unmark
 unmark 1
-list
 unmark 5
 unmark notANumber
+list
 delete
 delete 1
-list
 delete 5
 delete notANumber
+list
 bye

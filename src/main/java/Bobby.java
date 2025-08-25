@@ -1,231 +1,33 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-
+/**
+ * Chatbot Class
+ */
 public class Bobby {
-    public enum Keyword {
-        BYE,
-        LIST,
-        MARK,
-        UNMARK,
-        DELETE,
-        TODO,
-        DEADLINE,
-        EVENT
-    }
+    private Parser parser;
+    private Storage storage;
+    private TaskList taskList;
+    private Ui ui;
 
-    public static void addTask(ArrayList<Task> list, String input) {
-        System.out.println("    ______________________________");
-        System.out.println("    added: " + input);
-        list.add(new Task(input));
-        System.out.println("    ______________________________");
-    }
-
-    public static boolean isMark(ArrayList<Task> list, String input) {
-        String[] splits = input.split(" ");
-        return (splits.length == 2
-                && splits[0].equalsIgnoreCase("mark")
-                && Integer.parseInt(splits[1]) <= list.size());
-    }
-
-    public static boolean isUnmark(ArrayList<Task> list, String input) {
-        String[] splits = input.split(" ");
-        return (splits.length == 2
-                && splits[0].equalsIgnoreCase("unmark")
-                && Integer.parseInt(splits[1]) <= list.size());
-    }
-
-    public static void printGoodbye() {
-        System.out.println("    ______________________________");
-        System.out.println("    Bye. Hope to see you again soon!");
-        System.out.println("    ______________________________");
-    }
-
-    public static void deleteTask(ArrayList<Task> list, int num) {
-        Task task = list.get(num - 1);
-        list.remove(num - 1);
-        System.out.println("    ______________________________");
-        System.out.println("    Noted. I've removed this task:");
-        System.out.println("    " + task);
-        System.out.println("    Now you have " + list.size() + " tasks in the list");
-        System.out.println("    ______________________________");
-    }
-
-    public static void printList(ArrayList<Task> list) {
-        System.out.println("    ______________________________");
-        System.out.println("    Here are the tasks in your list:");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("    " + (i + 1) + "." + list.get(i));
+    public Bobby() {
+        ui = new Ui();
+        storage = new Storage();
+        try {
+            taskList = new TaskList(storage.load());
+        } catch (BobbyException e) {
+            ui.showMessage(e.getMessage());
         }
-        System.out.println("    ______________________________");
+        parser = new Parser(taskList);
     }
 
-    public static void printWelcome() {
-        System.out.println("    ______________________________");
-        System.out.println("    Hello! I'm Bobby");
-        System.out.println("    What can I do for you?");
-        System.out.println("    ______________________________");
-    }
-
-    public static boolean isToDo(String input) {
-        String[] splits = input.split(" ", 2);
-        return (splits.length == 2 && splits[0].equalsIgnoreCase("todo"));
-    }
-
-    public static boolean isDeadline(String input) {
-        String[] splits = input.split(" /");
-        if (splits.length == 2) {
-            if (splits[0].length() <= 8 || splits[1].length() <= 2) {
-                return false;
-            }
-            return (splits[0].substring(0, 8).equalsIgnoreCase("deadline")
-                    && splits[1].substring(0, 2).equalsIgnoreCase("by"));
+    public void run() {
+        ui.run(parser);
+        try {
+            storage.save(taskList.saveTasks());
+        } catch (BobbyException e) {
+            ui.showMessage(e.getMessage());
         }
-        return false;
     }
 
-    public static boolean isEvent(String input) {
-        String[] splits = input.split(" /");
-        if (splits.length == 3) {
-            if (splits[0].length() <= 5 || splits[1].length() <= 4 || splits[2].length() <= 2) {
-                return false;
-            }
-            return (splits[0].substring(0, 5).equalsIgnoreCase("event")
-                    && splits[1].substring(0, 4).equalsIgnoreCase("from")
-                    && splits[2].substring(0, 2).equalsIgnoreCase("to"));
-        }
-        return false;
-    }
-
-    public static void addToDo(ArrayList<Task> list, String input) {
-        System.out.println("    ______________________________");
-        System.out.println("    Got it. I've added this task:");
-        list.add(new ToDo(input.split(" ", 2)[1]));
-        System.out.println("      " + list.get(list.size() - 1));
-        System.out.println("    Now you have " + list.size() + " tasks in the list");
-        System.out.println("    ______________________________");
-    }
-
-    public static void addDeadline(ArrayList<Task> list, String input) {
-        System.out.println("    ______________________________");
-        System.out.println("    Got it. I've added this task:");
-        String[] splits = input.split(" /");
-        list.add(new Deadline(splits[0].substring(9), splits[1].substring(3)));
-        System.out.println("      " + list.get(list.size() - 1));
-        System.out.println("    Now you have " + list.size() + " tasks in the list");
-        System.out.println("    ______________________________");
-    }
-
-    public static void addEvent(ArrayList<Task> list, String input) {
-        System.out.println("    ______________________________");
-        System.out.println("    Got it. I've added this task:");
-        String[] splits = input.split(" /");
-        list.add(new Event(
-                splits[0].substring(6),
-                splits[1].substring(5),
-                splits[2].substring(3)
-        ));
-        System.out.println("      " + list.get(list.size() - 1));
-        System.out.println("    Now you have " + list.size() + " tasks in the list");
-        System.out.println("    ______________________________");
-    }
-
-    public static void main(String[] args) throws BobbyException {
-        Scanner scanner = new Scanner(System.in);
-        String input;
-        ArrayList<Task> list = new ArrayList<>();
-
-        printWelcome();
-
-        while (true) {
-            try {
-                input = scanner.nextLine();
-                String[] splits = input.split(" ", 2);
-                Keyword keywordEnum;
-
-                try {
-                    keywordEnum = Keyword.valueOf(splits[0].toUpperCase());
-                } catch (IllegalArgumentException e) {
-                    throw new BobbyException("OOPS! I have no idea what this means");
-                }
-
-                if (keywordEnum == Keyword.BYE && splits.length == 1) {
-                    printGoodbye();
-                    break;
-                }
-
-                switch (keywordEnum) {
-                    case LIST:
-                        if (splits.length == 1) {
-                            printList(list);
-                            break;
-                        } else {
-                            throw new BobbyException("OOPS! list keyword should not have anything behind it.");
-                        }
-
-                    case MARK:
-                    case UNMARK:
-                    case DELETE:
-                        if (splits.length == 1) {
-                            throw new BobbyException("OOPS! mark/unmark/delete must be in the format 'mark/unmark/delete {taskNumber}'");
-                        }
-
-                        int num;
-
-                        try {
-                            num = Integer.parseInt(splits[1]);
-                        } catch (NumberFormatException e) {
-                            throw new BobbyException("OOPS! Task to mark/unmark/delete must be an integer!");
-                        }
-
-                        if (num > list.size()) {
-                            throw new BobbyException("OOPS! You cant mark/unmark/delete a task that does not exist.");
-                        }
-
-                        if (isMark(list, input)) {
-                            list.get(num - 1).mark();
-                        } else if (isUnmark(list, input)) {
-                            list.get(num - 1).unmark();
-                        } else {
-                            deleteTask(list, num);
-                        }
-
-                        break;
-
-                    case TODO:
-                        if (isToDo(input)) {
-                            addToDo(list, input);
-                        } else {
-                            throw new BobbyException("OOPS! Description of todo cannot be empty.");
-                        }
-                        break;
-
-                    case DEADLINE:
-                        if (isDeadline(input)) {
-                            addDeadline(list, input);
-                        } else {
-                            throw new BobbyException("OOPS! Setting a deadline should follow this format\n" +
-                                    "    'deadline {description} /by {by}'.");
-                        }
-                        break;
-
-                    case EVENT:
-                        if (isEvent(input)) {
-                            addEvent(list, input);
-                        } else {
-                            throw new BobbyException("OOPS! Setting a deadline should follow this format\n" +
-                                    "    'event {description} /from {from} /to {to}'.");
-                        }
-                        break;
-
-                    default:
-                        ;
-                }
-            } catch (BobbyException e) {
-                System.out.println("    ______________________________");
-                System.out.println("    " + e.getMessage());
-                System.out.println("    ______________________________");
-            }
-        }
+    public static void main(String[] args) {
+        new Bobby().run();
     }
 }
