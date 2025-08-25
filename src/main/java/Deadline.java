@@ -28,7 +28,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toStorage() {
-        return super.toStorage() + " / " + dateTimeToStorage(by);
+        return super.toStorage() + " /by " + dateTimeToStorage(by);
     }
 
     @Override

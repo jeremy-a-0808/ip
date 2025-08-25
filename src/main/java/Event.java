@@ -30,7 +30,7 @@ public class Event extends Task {
      */
     @Override
     public String toStorage() {
-        return super.toStorage() + " / " + dateTimeToStorage(from) + " / " + dateTimeToStorage(to);
+        return super.toStorage() + " /from " + dateTimeToStorage(from) + " /to " + dateTimeToStorage(to);
     }
 
     @Override
