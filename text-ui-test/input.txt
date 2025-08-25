@@ -1,10 +1,12 @@
 randomtextfails
 todo task1
 todo
-deadline deadline1 /by sunday
 deadline deadlineWithoutBy
-event event1 /from monday /to sunday
+deadline deadline /by wrongformatfail
+deadline deadline1 /by 01/01/2025 1010
 event eventNoFromOrTo
+event event /from wrongformat /to fail
+event event1 /from 01/01/2025 1010 /to 02/01/2025 1011
 list
 list extraArg
 mark
