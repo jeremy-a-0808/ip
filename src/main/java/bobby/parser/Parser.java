@@ -89,11 +89,15 @@ public class Parser {
             taskList.addTask(2, false, split[1]);
             Ui.showMessage("I've added this Event.\n   " + taskList.getLastTask());
             break;
+        default:
         }
 
         return true;
     }
 
+    /**
+     * enumeration for the commands that the user may input
+     */
     public enum Command {
         BYE,
         LIST,
@@ -105,6 +109,10 @@ public class Parser {
         DEADLINE,
         EVENT;
 
+        /**
+         * checks if a command expects argument
+         * @return true if command expects arguments, false if not
+         */
         public boolean expectsArguments() {
             switch (this) {
             case BYE:

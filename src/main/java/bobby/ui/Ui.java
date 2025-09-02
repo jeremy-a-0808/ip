@@ -5,6 +5,9 @@ import java.util.Scanner;
 import bobby.exception.BobbyException;
 import bobby.parser.Parser;
 
+/**
+ * Ui class that interacts with the user by sending messages
+ */
 public class Ui {
     private Scanner scanner;
 
@@ -40,6 +43,10 @@ public class Ui {
         showMessage("Bye. Hope to see you again soon!");
     }
 
+    /**
+     * Starts the messaging loop until user terminates with "bye"
+     * @param parser
+     */
     public void run(Parser parser) {
         String input;
         boolean notBye = true;

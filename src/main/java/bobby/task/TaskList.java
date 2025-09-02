@@ -12,7 +12,7 @@ public class TaskList {
     private ArrayList<Task> taskList;
 
     /**
-     * Loads the taskList String from Storage back into a ArrayList<Task>
+     * Loads the taskList String from Storage back into a ArrayList of type Task
      *
      * @param tasks String from Storage
      * @throws BobbyException
@@ -51,9 +51,9 @@ public class TaskList {
                     throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
                 }
             } else {
-                if (split.length == 3 &&
-                        split[1].substring(0, 4).equalsIgnoreCase("from") &&
-                        split[2].substring(0, 2).equalsIgnoreCase("to")
+                if (split.length == 3
+                        && split[1].substring(0, 4).equalsIgnoreCase("from")
+                        && split[2].substring(0, 2).equalsIgnoreCase("to")
                 ) {
                     taskList.add(new Event(split[0], isMark, split[1].substring(5), split[2].substring(3)));
                 } else {
@@ -126,6 +126,13 @@ public class TaskList {
         return this.getTask(taskList.size());
     }
 
+    /**
+     * looks for tasks whose description fits the given string
+     *
+     * @param search string that user inputs
+     * @return a TaskList of Tasks that fit the given search string
+     * @throws BobbyException
+     */
     public TaskList findTasks(String search) throws BobbyException {
         List<String> result = new ArrayList<>();
         for (Task task: taskList) {
@@ -137,7 +144,7 @@ public class TaskList {
     }
 
     /**
-     * transforms current taskList into a List<String> to be saved by Storage.
+     * transforms current taskList into a List of String to be saved by Storage.
      * Example Format:
      * 0 | 1 | task | description
      * 1 | 0 | task | description | by

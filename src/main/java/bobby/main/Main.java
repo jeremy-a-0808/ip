@@ -22,7 +22,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setBobby(bobby);  // inject the Bobby instance
+            fxmlLoader.<MainWindow>getController().setBobby(bobby); // inject the Bobby instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

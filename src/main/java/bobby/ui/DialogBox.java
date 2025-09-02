@@ -1,10 +1,9 @@
 package bobby.ui;
 
-import bobby.main.MainWindow;
-
 import java.io.IOException;
 import java.util.Collections;
 
+import bobby.main.MainWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

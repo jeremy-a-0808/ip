@@ -10,6 +10,13 @@ import bobby.exception.BobbyException;
 public class Deadline extends Task {
     protected LocalDateTime by;
 
+    /**
+     * initialise Deadline object
+     * @param description
+     * @param isMark
+     * @param by
+     * @throws BobbyException
+     */
     public Deadline(String description, boolean isMark, String by) throws BobbyException {
         super(description, isMark);
         this.by = parseString(by);
