@@ -94,6 +94,68 @@ public class Parser {
         return true;
     }
 
+    public String processThenOutputCommand(String input) throws BobbyException {
+        String[] split = input.split(" ", 2);
+        String command = split[0];
+        Command commandEnum;
+        try {
+            commandEnum = Command.valueOf(command.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new BobbyException("command not recognised.");
+        }
+
+        if (commandEnum.expectsArguments() && split.length == 1) {
+            throw new BobbyException(command + " requires arguments.");
+        }
+
+        if (!commandEnum.expectsArguments() && split.length > 1) {
+            throw new BobbyException(command + " should not have any arguments.");
+        }
+
+        switch (commandEnum) {
+        case BYE:
+            return Ui.outputGoodbye();
+
+        case LIST:
+            return taskList.toString();
+
+        case FIND:
+            return taskList.findTasks(split[1]).toString();
+
+        case MARK:
+        case UNMARK:
+        case DELETE:
+            int num;
+
+            try {
+                num = Integer.parseInt(split[1]);
+            } catch (NumberFormatException e) {
+                throw new BobbyException(command + " task number must be an integer.");
+            }
+            if (split[0].equalsIgnoreCase("mark")) {
+                taskList.markTask(num);
+                return "I've marked this task.\n    " + taskList.getTask(num);
+            } else if (split[0].equalsIgnoreCase("unmark")) {
+                taskList.unmarkTask(num);
+                return "I've unmarked this task.\n  " + taskList.getTask(num);
+            } else {
+                Task task = taskList.getTask(num);
+                taskList.deleteTask(num);
+                return "I've deleted this task.\n   " + task;
+            }
+        case TODO:
+            taskList.addTask(0, false, split[1]);
+            return "I've added this ToDo.\n   " + taskList.getLastTask();
+        case DEADLINE:
+            taskList.addTask(1, false, split[1]);
+            return "I've added this Deadline.\n   " + taskList.getLastTask();
+        case EVENT:
+            taskList.addTask(2, false, split[1]);
+            return "I've added this Event.\n   " + taskList.getLastTask();
+        }
+        return "";
+    }
+
     public enum Command {
         BYE,
         LIST,
