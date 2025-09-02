@@ -76,6 +76,11 @@ public abstract class Task {
         return datetime.format(formatter);
     }
 
+    /**
+     * formats datetime to Storage friendly String format
+     * @param datetime
+     * @return
+     */
     public String datetimeToStorage(LocalDateTime datetime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return datetime.format(formatter);

@@ -11,7 +11,7 @@ import java.util.Scanner;
 import bobby.exception.BobbyException;
 
 /**
- * Saves the final TaskList. When loaded, returns a List<String>
+ * Saves the final TaskList. When loaded, returns a List of String
  * that can then be loaded by the TaskList class
  */
 public class Storage {
@@ -24,7 +24,7 @@ public class Storage {
      * Loads TaskList from previous runs of Bobby from bobby.txt
      * Empty list if file does not exist
      *
-     * @return List<String> of Tasks
+     * @return List of Tasks converted to String format
      */
     public List<String> load() {
         List<String> tasks = new ArrayList<>();

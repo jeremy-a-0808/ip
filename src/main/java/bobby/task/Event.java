@@ -11,6 +11,14 @@ public class Event extends Task {
     protected LocalDateTime from;
     protected LocalDateTime to;
 
+    /**
+     * initialises an Event object
+     * @param description
+     * @param isMark
+     * @param from
+     * @param to
+     * @throws BobbyException
+     */
     public Event(String description, boolean isMark, String from, String to) throws BobbyException {
         super(description, isMark);
         this.from = parseString(from);
