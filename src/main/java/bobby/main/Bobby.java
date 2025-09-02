@@ -11,7 +11,7 @@ import bobby.ui.Ui;
  */
 public class Bobby {
     private Parser parser;
-    private Storage storage;
+    Storage storage;
     private TaskList taskList;
     private Ui ui;
 
@@ -26,11 +26,23 @@ public class Bobby {
         parser = new Parser(taskList);
     }
 
+    public void save() {
+        try {
+            storage.save(taskList.saveTasks());
+        } catch (BobbyException e) {
+            ui.showMessage(e.getMessage());
+        }
+    }
+
     /**
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
-        return "Bobby heard: " + input;
+        try {
+            return parser.processThenOutputCommand(input);
+        } catch (BobbyException e) {
+            return e.getMessage();
+        }
     }
 
     public static void main(String[] args) {
@@ -39,10 +51,6 @@ public class Bobby {
 
     public void run() {
         ui.run(parser);
-        try {
-            storage.save(taskList.saveTasks());
-        } catch (BobbyException e) {
-            ui.showMessage(e.getMessage());
-        }
+        this.save();
     }
 }

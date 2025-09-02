@@ -47,6 +47,22 @@ public class Ui {
      * Starts the messaging loop until user terminates with "bye"
      * @param parser
      */
+    /**
+     *
+     * @return welcome String
+     */
+    public static String outputWelcome() {
+        return "Hello I'm Bobby!\nWhat can I do for you?";
+    }
+
+    /**
+     *
+     * @return goodbye String
+     */
+    public static String outputGoodbye() {
+        return "Bye. Hope to see you again soon!";
+    }
+
     public void run(Parser parser) {
         String input;
         boolean notBye = true;
