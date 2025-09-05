@@ -40,6 +40,7 @@ public class TaskList {
      * @throws BobbyException if content does not match required format
      */
     public void addTask(int taskType, boolean isMark, String content) throws BobbyException {
+        int oldSize = taskList.size();
         if (taskType == 0) {
             taskList.add(new ToDo(content, isMark));
         } else {
@@ -61,6 +62,7 @@ public class TaskList {
                 }
             }
         }
+        assert oldSize + 1 == taskList.size();
     }
 
     /**
