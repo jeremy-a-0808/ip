@@ -90,6 +90,7 @@ public class Parser {
             Ui.showMessage("I've added this Event.\n   " + taskList.getLastTask());
             break;
         default:
+            assert false;
         }
 
         return true;
@@ -153,8 +154,9 @@ public class Parser {
         case EVENT:
             taskList.addTask(2, false, split[1]);
             return "I've added this Event.\n   " + taskList.getLastTask();
+        default:
+            return "";
         }
-        return "";
     }
 
     /**
