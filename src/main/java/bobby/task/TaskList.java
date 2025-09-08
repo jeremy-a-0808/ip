@@ -29,6 +29,28 @@ public class TaskList {
         }
     }
 
+    public Task makeTask(int taskType, boolean isMark, String content) throws BobbyException {
+        if (taskType == 0) {
+            return new ToDo(content, isMark);
+        }
+        String[] split = content.split(" /");
+        if (taskType == 1) {
+            if (split.length == 2 && split[1].substring(0, 2).equalsIgnoreCase("by")) {
+                return new Deadline(split[0], isMark, split[1].substring(3));
+            } else {
+                throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
+            }
+        }
+        if (split.length == 3
+                && split[1].substring(0, 4).equalsIgnoreCase("from")
+                && split[2].substring(0, 2).equalsIgnoreCase("to")
+        ) {
+            return new Event(split[0], isMark, split[1].substring(5), split[2].substring(3));
+        } else {
+            throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
+        }
+    }
+
     /**
      * Adds the task to the taskList. Bobby should first check if the input is more than just the command,
      * if not throw BobbyException when user sends input.
@@ -39,27 +61,7 @@ public class TaskList {
      */
     public void addTask(int taskType, boolean isMark, String content) throws BobbyException {
         int oldSize = taskList.size();
-        if (taskType == 0) {
-            taskList.add(new ToDo(content, isMark));
-            return;
-        }
-        String[] split = content.split(" /");
-        if (taskType == 1) {
-            if (split.length == 2 && split[1].substring(0, 2).equalsIgnoreCase("by")) {
-                taskList.add(new Deadline(split[0], isMark, split[1].substring(3)));
-                return;
-            } else {
-                throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
-            }
-        }
-        if (split.length == 3
-                && split[1].substring(0, 4).equalsIgnoreCase("from")
-                && split[2].substring(0, 2).equalsIgnoreCase("to")
-        ) {
-            taskList.add(new Event(split[0], isMark, split[1].substring(5), split[2].substring(3)));
-        } else {
-            throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
-        }
+        taskList.add(makeTask(taskType, isMark, content));
         assert oldSize + 1 == taskList.size();
     }
 
@@ -140,6 +142,50 @@ public class TaskList {
             }
         }
         return new TaskList(result);
+    }
+
+    public void editTask(int taskNum, int taskType, String input) throws BobbyException {
+        Task task = this.getTask(taskNum);
+        String description = task.getDescription();
+        boolean isMark = task.getIsMark();
+        String formattedInput = description + " " + input;
+        taskList.set(taskNum - 1, makeTask(taskType, isMark, formattedInput));
+    }
+
+    public void snoozeTasks(String input) throws BobbyException {
+        String[] split = input.split(" /");
+        int taskNum;
+        try {
+            taskNum = Integer.parseInt(split[0]);
+        } catch (NumberFormatException e) {
+            throw new BobbyException("Snooze task number must be an integer.");
+        }
+        if (taskNum < 0 | taskNum > taskList.size()) {
+            throw new BobbyException("Task does not exist to snooze");
+        }
+        Task task = this.getTask(taskNum);
+        int taskType = task.getTaskType();
+        if (taskType == 0) {
+            throw new BobbyException("ToDos cannot be snoozed");
+        } else if (taskType == 1) {
+            if (split.length != 2) {
+                throw new BobbyException("Editing a deadline must be in the format 'snooze {taskNum} /by {new date}");
+            } else if (!split[1].substring(0, 3).equalsIgnoreCase("by ")) {
+                throw new BobbyException("Editing a deadline must be in the format 'snooze {taskNum} /by {new date}");
+            }
+        } else {
+            if (split.length != 3) {
+                throw new BobbyException(
+                        "Editing an event must be in the format 'snooze {taskNum} /from {newDate} /to {newDate}"
+                );
+            } else if (!split[1].substring(0, 5).equalsIgnoreCase("from ")
+                    && !split[2].substring(0, 3).equalsIgnoreCase("to ")) {
+                throw new BobbyException(
+                        "Editing an event must be in the format 'snooze {taskNum} /from {newDate} /to {newDate}"
+                );
+            }
+        }
+        editTask(taskNum, taskType, input.split(" ", 2)[1]);
     }
 
     /**

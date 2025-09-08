@@ -24,6 +24,14 @@ public abstract class Task {
      */
     public abstract int getTaskType();
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public boolean getIsMark() {
+        return this.isMark;
+    }
+
     /**
      * used for toString()
      * @return isMark status for toString()
