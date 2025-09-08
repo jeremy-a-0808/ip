@@ -83,6 +83,10 @@ public class Parser {
         case EVENT:
             taskList.addTask(2, false, split[1]);
             return "I've added this Event.\n   " + taskList.getLastTask();
+        case SNOOZE:
+            int taskNum = Integer.parseInt(split[1].substring(0, 1));
+            taskList.snoozeTasks(split[1]);
+            return "I've snoozed this Task.\n   " + taskList.getTask(taskNum);
         default:
             return "";
         }
@@ -100,7 +104,8 @@ public class Parser {
         FIND,
         TODO,
         DEADLINE,
-        EVENT;
+        EVENT,
+        SNOOZE;
 
         /**
          * checks if a command expects argument
