@@ -13,7 +13,6 @@ public class TaskList {
 
     /**
      * Loads the taskList String from Storage back into a ArrayList of type Task
-     *
      * @param tasks String from Storage
      * @throws BobbyException
      */
@@ -33,7 +32,6 @@ public class TaskList {
     /**
      * Adds the task to the taskList. Bobby should first check if the input is more than just the command,
      * if not throw BobbyException when user sends input.
-     *
      * @param taskType 0 is ToDo, 1 is Deadline, 2 is Event
      * @param content  includes the description, and the dates if necessary. Does not include command.
      * @param isMark   whether the task has been marked
@@ -43,31 +41,30 @@ public class TaskList {
         int oldSize = taskList.size();
         if (taskType == 0) {
             taskList.add(new ToDo(content, isMark));
-        } else {
-            String[] split = content.split(" /");
-            if (taskType == 1) {
-                if (split.length == 2 && split[1].substring(0, 2).equalsIgnoreCase("by")) {
-                    taskList.add(new Deadline(split[0], isMark, split[1].substring(3)));
-                } else {
-                    throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
-                }
+            return;
+        }
+        String[] split = content.split(" /");
+        if (taskType == 1) {
+            if (split.length == 2 && split[1].substring(0, 2).equalsIgnoreCase("by")) {
+                taskList.add(new Deadline(split[0], isMark, split[1].substring(3)));
+                return;
             } else {
-                if (split.length == 3
-                        && split[1].substring(0, 4).equalsIgnoreCase("from")
-                        && split[2].substring(0, 2).equalsIgnoreCase("to")
-                ) {
-                    taskList.add(new Event(split[0], isMark, split[1].substring(5), split[2].substring(3)));
-                } else {
-                    throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
-                }
+                throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
             }
+        }
+        if (split.length == 3
+                && split[1].substring(0, 4).equalsIgnoreCase("from")
+                && split[2].substring(0, 2).equalsIgnoreCase("to")
+        ) {
+            taskList.add(new Event(split[0], isMark, split[1].substring(5), split[2].substring(3)));
+        } else {
+            throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
         }
         assert oldSize + 1 == taskList.size();
     }
 
     /**
      * deletes a task from the taskList. Parser checks if taskNum is not an int
-     *
      * @param taskNum Number of the task user wishes to delete. 1-indexed
      * @throws BobbyException if task does not exist
      */
@@ -157,8 +154,6 @@ public class TaskList {
      */
     public List<String> saveTasks() {
         List<String> output = new ArrayList<>();
-        int taskType;
-        int isMark;
 
         for (Task task : taskList) {
             output.add(task.toStorage());

@@ -30,25 +30,6 @@ public class Ui {
     }
 
     /**
-     * prints the welcome message
-     */
-    public static void showWelcome() {
-        showMessage("Hello I'm Bobby!\nWhat can I do for you?");
-    }
-
-    /**
-     * prints the exit message
-     */
-    public static void showGoodbye() {
-        showMessage("Bye. Hope to see you again soon!");
-    }
-
-    /**
-     * Starts the messaging loop until user terminates with "bye"
-     * @param parser
-     */
-    /**
-     *
      * @return welcome String
      */
     public static String outputWelcome() {
@@ -56,22 +37,36 @@ public class Ui {
     }
 
     /**
-     *
      * @return goodbye String
      */
     public static String outputGoodbye() {
         return "Bye. Hope to see you again soon!";
     }
 
+    /**
+     * prints the welcome message
+     */
+    public static void showWelcome() {
+        showMessage(outputWelcome());
+    }
+
+    /**
+     * prints the exit message
+     */
+    public static void showGoodbye() {
+        showMessage(outputGoodbye());
+    }
+
     public void run(Parser parser) {
         String input;
-        boolean notBye = true;
+        boolean isBye = false;
 
         showWelcome();
-        while (notBye) {
+        while (!isBye) {
             try {
                 input = scanner.nextLine();
-                notBye = parser.processCommand(input);
+                isBye = parser.checkBye(input);
+                Ui.showMessage(parser.processCommand(input));
             } catch (BobbyException e) {
                 this.showMessage(e.getMessage());
             }
