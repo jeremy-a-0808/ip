@@ -20,14 +20,12 @@ public abstract class Task {
 
     /**
      * used to categorise tasks
-     *
      * @return task type
      */
     public abstract int getTaskType();
 
     /**
      * used for toString()
-     *
      * @return isMark status for toString()
      */
     public String getStatusIcon() {
@@ -50,7 +48,6 @@ public abstract class Task {
 
     /**
      * parses the given string into datetime
-     *
      * @param datetime string
      * @return LocalDateTime object
      */
@@ -67,7 +64,6 @@ public abstract class Task {
 
     /**
      * converts LocalDateTime into toString() friendly format
-     *
      * @param datetime LocalDateTime object
      * @return String
      */
@@ -88,7 +84,6 @@ public abstract class Task {
 
     /**
      * converting the task to a String friendly format
-     *
      * @return String that is saved in storage
      */
     public String toStorage() {

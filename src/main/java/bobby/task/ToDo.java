@@ -10,7 +10,6 @@ public class ToDo extends Task {
 
     /**
      * used to categorise tasks
-     *
      * @return task type
      */
     @Override
@@ -20,7 +19,6 @@ public class ToDo extends Task {
 
     /**
      * converting the task to a String friendly format
-     *
      * @return String that is saved in storage
      */
     @Override

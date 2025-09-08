@@ -39,7 +39,7 @@ public class Bobby {
      */
     public String getResponse(String input) {
         try {
-            return parser.processThenOutputCommand(input);
+            return parser.processCommand(input);
         } catch (BobbyException e) {
             return e.getMessage();
         }

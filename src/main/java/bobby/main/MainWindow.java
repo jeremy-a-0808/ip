@@ -1,5 +1,6 @@
 package bobby.main;
 
+import bobby.parser.Parser;
 import bobby.ui.DialogBox;
 import bobby.ui.Ui;
 import javafx.application.Platform;
@@ -46,7 +47,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        if (input.equalsIgnoreCase("bye")) {
+        if (Parser.checkBye(input)) {
             bobby.save();
             Platform.exit();
         }
