@@ -38,6 +38,7 @@ public class TaskList {
      * @throws BobbyException if content does not match required format
      */
     public void addTask(int taskType, boolean isMark, String content) throws BobbyException {
+        int oldSize = taskList.size();
         if (taskType == 0) {
             taskList.add(new ToDo(content, isMark));
             return;
@@ -51,7 +52,6 @@ public class TaskList {
                 throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
             }
         }
-
         if (split.length == 3
                 && split[1].substring(0, 4).equalsIgnoreCase("from")
                 && split[2].substring(0, 2).equalsIgnoreCase("to")
@@ -60,6 +60,7 @@ public class TaskList {
         } else {
             throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
         }
+        assert oldSize + 1 == taskList.size();
     }
 
     /**

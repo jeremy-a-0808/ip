@@ -83,8 +83,9 @@ public class Parser {
         case EVENT:
             taskList.addTask(2, false, split[1]);
             return "I've added this Event.\n   " + taskList.getLastTask();
+        default:
+            return "";
         }
-        return "";
     }
 
     /**
