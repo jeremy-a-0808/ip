@@ -29,13 +29,21 @@ public class Storage {
     public List<String> load() {
         List<String> tasks = new ArrayList<>();
         try {
-            File f = new File(FILE_PATH);
-            Scanner s = new Scanner(f);
+            File file = new File(FILE_PATH);
+            File parentDir = file.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs(); // create directory if not exists
+            }
+            if (!file.exists()) {
+                file.createNewFile(); // create file if not exists
+            }
+            Scanner s = new Scanner(file);
             while (s.hasNext()) {
                 tasks.add(s.nextLine());
             }
-        } catch (FileNotFoundException e) {
-            ;
+            s.close();
+        } catch (IOException e) {
+            // Ignore or handle file creation and reading errors as needed
         }
         return tasks;
     }
@@ -49,7 +57,15 @@ public class Storage {
      */
     public void save(List<String> tasks) throws BobbyException {
         try {
-            FileWriter fw = new FileWriter(FILE_PATH);
+            File file = new File(FILE_PATH);
+            File parentDir = file.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs(); // create directory if not exists
+            }
+            if (!file.exists()) {
+                file.createNewFile(); // create file if not exists
+            }
+            FileWriter fw = new FileWriter(file);
             for (String task : tasks) {
                 fw.write(task);
                 fw.write(System.lineSeparator());
@@ -60,3 +76,4 @@ public class Storage {
         }
     }
 }
+
