@@ -9,6 +9,7 @@ import bobby.exception.BobbyException;
  * Stores the task list and allows users to add, delete, mark, unmark tasks in the task list
  */
 public class TaskList {
+    private static final String INVALID_DATE_FORMAT_MESSAGE = "Use the yyyy-MM-dd HHmm format.";
     private ArrayList<Task> taskList;
 
     /**
@@ -38,7 +39,7 @@ public class TaskList {
             if (split.length == 2 && split[1].substring(0, 2).equalsIgnoreCase("by")) {
                 return new Deadline(split[0], isMark, split[1].substring(3));
             } else {
-                throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
+                throw new BobbyException(INVALID_DATE_FORMAT_MESSAGE);
             }
         }
         if (split.length == 3
@@ -47,7 +48,7 @@ public class TaskList {
         ) {
             return new Event(split[0], isMark, split[1].substring(5), split[2].substring(3));
         } else {
-            throw new BobbyException("Use the yyyy-MM-dd HHmm format.");
+            throw new BobbyException(INVALID_DATE_FORMAT_MESSAGE);
         }
     }
 
@@ -160,7 +161,7 @@ public class TaskList {
         } catch (NumberFormatException e) {
             throw new BobbyException("Snooze task number must be an integer.");
         }
-        if (taskNum < 0 | taskNum > taskList.size()) {
+        if (taskNum < 0 || taskNum > taskList.size()) {
             throw new BobbyException("Task does not exist to snooze");
         }
         Task task = this.getTask(taskNum);
