@@ -24,6 +24,7 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setBobby(bobby); // inject the Bobby instance
+            stage.setTitle("Bobby");
             stage.show();
 
             stage.setOnCloseRequest(event -> {
